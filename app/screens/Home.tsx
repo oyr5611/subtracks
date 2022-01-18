@@ -3,6 +3,7 @@ import CoverArt from '@app/components/CoverArt'
 import GradientScrollView from '@app/components/GradientScrollView'
 import Header from '@app/components/Header'
 import NothingHere from '@app/components/NothingHere'
+import PressableOpacity from '@app/components/PressableOpacity'
 import { useActiveServerRefresh } from '@app/hooks/server'
 import { AlbumListItem } from '@app/models/music'
 import { selectMusic } from '@app/state/music'
@@ -14,6 +15,7 @@ import { GetAlbumListType } from '@app/subsonic/params'
 import { useNavigation } from '@react-navigation/native'
 import React, { useCallback } from 'react'
 import { RefreshControl, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const titles: { [key in GetAlbumListType]?: string } = {
   recent: 'Recently Played',
@@ -73,7 +75,10 @@ const Category = React.memo<{
 
   return (
     <View style={styles.category}>
-      <Header style={styles.header}>{name}</Header>
+      <PressableOpacity style={styles.headerContainer}>
+        <Header style={styles.header}>{name}</Header>
+        <Icon style={styles.headerMore} name="arrow-forward-ios" color="white" size={20} />
+      </PressableOpacity>
       {data.length > 0 ? <Albums /> : <Nothing />}
     </View>
   )
@@ -124,11 +129,26 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 20,
   },
-  header: {
+  headerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 20,
+    // backgroundColor: 'green',
+  },
+  header: {
+    // backgroundColor: 'blue',
+    flex: 1,
+  },
+  headerMore: {
+    // backgroundColor: 'pink',
+    // fontFamily: font.bold,
+    // fontSize: 20,
+    marginTop: 6,
   },
   category: {
     // marginTop: 12,
+    // backgroundColor: 'red',
   },
   nothingHereContent: {
     width: '100%',
