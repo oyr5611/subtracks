@@ -16,7 +16,7 @@ import React, { useCallback } from 'react'
 import { RefreshControl, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
 
 const titles: { [key in GetAlbumListType]?: string } = {
-  recent: 'Recently Played',
+  recent: 'Recently Played',//GetAlbumListTypeにおけるキー値になるString
   random: 'Random Albums',
   frequent: 'Frequently Played',
   starred: 'Starred Albums',
@@ -56,7 +56,7 @@ const Category = React.memo<{
     <ScrollView
       horizontal={true}
       showsHorizontalScrollIndicator={false}
-      overScrollMode={'never'}
+      overScrollMode={'always'}
       style={styles.artScroll}
       contentContainerStyle={styles.artScrollContent}>
       {data.map(album => (
@@ -71,12 +71,20 @@ const Category = React.memo<{
     </View>
   )
 
-  return (
-    <View style={styles.category}>
-      <Header style={styles.header}>{name}</Header>
-      {data.length > 0 ? <Albums /> : <Nothing />}
-    </View>
-  )
+  if(data.length > 0){
+    return (
+      <View style={styles.category}>
+        <Header style={styles.header}>{name}</Header>
+        <Albums />
+      </View>
+    )
+  }else{
+    return (
+      <View style={styles.category}>
+      </View>
+    )
+  }
+
 })
 
 const Home = () => {
